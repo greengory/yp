@@ -12,8 +12,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	"github.com/opiumated/shorpie/users"
 	"github.com/opiumated/yellowpages/mongo"
+	"github.com/opiumated/yellowpages/users"
 	"github.com/spf13/viper"
 )
 
