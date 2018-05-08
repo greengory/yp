@@ -4,11 +4,16 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/opiumated/shorpie/users"
+	"github.com/opiumated/yellowpages/mongo"
 	"github.com/spf13/viper"
 )
 
@@ -56,10 +61,22 @@ func main() {
 		MaxAge:           300,
 	})
 	r.Use(cors.Handler)
+	r.Mount("/users", users.Routes())
+
+	//Database Connection
+	mongo.Init()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Welcome to Yellow pages"))
 	})
 
-	http.ListenAndServe(":"+port, r)
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, syscall.SIGTERM)
+	go func() {
+		<-c
+		log.Println("Stopping server...")
+		os.Exit(1)
+	}()
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }

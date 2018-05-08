@@ -1,0 +1,12 @@
+{
+  "debug": true,
+  "server": {
+    "address": "9090"
+  },
+  "database": {
+    "host": "localhost",
+    "port": 27017,
+    "user": "root",
+    "name": "yellow_pages"
+  }
+}
