@@ -5,23 +5,23 @@ import (
 	"time"
 
 	"github.com/opiumated/yellowpages/mongo"
-	"github.com/spf13/viper"
 	"gopkg.in/mgo.v2/bson"
 )
 
 var (
-	database = viper.Get(mongo.DATABASE).(string)
+	database = "yellowpages_dev"
 )
 
 type User struct {
-	ID        bson.ObjectId `json:"id" bson:"_id"`
-	Name      string        `json:"name"`
-	Email     string        `json:"email"`
-	Password  []byte        `json:"-"`
-	IsAdmin   bool          `json:"is_admin"`
-	IsActive  bool          `json:"is_active"`
-	CreatedAt time.Time     `json:"created_at"`
-	UpdatedAt time.Time     `json:"updated_at"`
+	ID             bson.ObjectId `json:"id" bson:"_id"`
+	Name           string        `json:"name"`
+	Email          string        `json:"email"`
+	Password       string        `json:"-" bson:"-"`
+	HashedPassword []byte        `json:"hash_password, omitempty"`
+	IsAdmin        bool          `json:"is_admin"`
+	IsActive       bool          `json:"is_active"`
+	CreatedAt      time.Time     `json:"created_at"`
+	UpdatedAt      time.Time     `json:"updated_at"`
 }
 
 func Create(user User) error {
@@ -36,7 +36,7 @@ func GetAll() ([]User, error) {
 	defer session.Close()
 	var users []User
 	collection := session.DB(database).C(mongo.USERCOLLECTION)
-	if err := collection.Find(bson.M{}).All(users); err != nil {
+	if err := collection.Find(bson.M{}).All(&users); err != nil {
 		return users, err
 	}
 	return users, nil
