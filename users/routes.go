@@ -8,5 +8,7 @@ func Routes() chi.Router {
 	router.Get("/", user.GetAll)
 	router.Post("/", user.Register)
 	router.Post("/auth", user.Login)
+	router.Get("/confirm", user.ConfirmAccount)
+	router.Get("/remove", user.RemoveAll)
 	return router
 }

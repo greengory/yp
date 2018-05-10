@@ -7,9 +7,9 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/opiumated/shorpie/utils"
 	"github.com/opiumated/yellowpages/message"
 	"github.com/opiumated/yellowpages/mongo"
+	"github.com/opiumated/yellowpages/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -47,6 +47,7 @@ func (u User) Register(w http.ResponseWriter, r *http.Request) {
 	newUser.ID = bson.NewObjectId()
 	newUser.IsActive = false
 	newUser.HashedPassword, _ = utils.HashPassword(newUser.Password)
+	newUser.VerifiedToken = utils.GenerateToken()
 	newUser.CreatedAt = time.Now()
 	newUser.UpdatedAt = time.Now()
 
@@ -96,9 +97,8 @@ func (u User) Login(w http.ResponseWriter, r *http.Request) {
 	if err := bcrypt.CompareHashAndPassword(user.HashedPassword, []byte(userCredential.Password)); err == nil {
 		log.Println("Account exist... Creating token")
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-			"email":    userCredential.Email,
-			"password": userCredential.Password,
-			"expires":  time.Now().Add(time.Hour * 24).Unix(),
+			"email":   userCredential.Email, //Don't store password in JWT (it's reversible)
+			"expires": time.Now().Add(time.Hour * 72).Unix(),
 		})
 		tokenString, _ := token.SignedString([]byte("thisWillBeMovedToADedicatedStruct"))
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -108,4 +108,17 @@ func (u User) Login(w http.ResponseWriter, r *http.Request) {
 		message.NewAPIError(&message.APIError{Status: http.StatusUnauthorized}, w)
 		return
 	}
+}
+
+func (u User) RemoveAll(w http.ResponseWriter, r *http.Request) {
+	session := mongo.Get().Session.Copy()
+	defer session.Close()
+	collection := session.DB(database).C(mongo.USERCOLLECTION)
+	_, err := collection.RemoveAll(nil)
+	if err != nil {
+		message.NewAPIError(&message.APIError{Success: false}, w)
+		return
+	}
+	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "All user data has been removed"}, w, http.StatusOK)
+	return
 }

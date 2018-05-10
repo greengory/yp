@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	database = "yellowpages_dev"
+	database = "yellowpages_test"
 )
 
 type User struct {
@@ -18,6 +18,7 @@ type User struct {
 	Email          string        `json:"email"`
 	Password       string        `json:"-" bson:"-"`
 	HashedPassword []byte        `json:"hash_password, omitempty"`
+	VerifiedToken  string        `json:"verified_token" bson:"verified_token"`
 	IsAdmin        bool          `json:"is_admin"`
 	IsActive       bool          `json:"is_active"`
 	CreatedAt      time.Time     `json:"created_at"`
@@ -42,7 +43,7 @@ func GetAll() ([]User, error) {
 	return users, nil
 }
 
-func Update(userId string, newUser User) error {
+func Update(userId interface{}, newUser User) error {
 	session := mongo.Get().Session.Copy()
 	defer session.Close()
 	collection := session.DB(database).C(mongo.USERCOLLECTION)
