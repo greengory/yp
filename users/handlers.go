@@ -45,7 +45,7 @@ func (u User) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	newUser.ID = bson.NewObjectId()
-	newUser.IsActive = true // IsConfirmed should be more appropriate: User confirms e-mail
+	newUser.IsActive = false
 	newUser.HashedPassword, _ = utils.HashPassword(newUser.Password)
 	newUser.CreatedAt = time.Now()
 	newUser.UpdatedAt = time.Now()
@@ -63,6 +63,7 @@ func (u User) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("User successfully created...")
+	u.SendConfirmationEmail(newUser)
 	message.NewAPIResponse(&message.APIResponse{Success: true, Data: newUser}, w, http.StatusOK)
 	return
 }
@@ -97,6 +98,7 @@ func (u User) Login(w http.ResponseWriter, r *http.Request) {
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"email":    userCredential.Email,
 			"password": userCredential.Password,
+			"expires":  time.Now().Add(time.Hour * 24).Unix(),
 		})
 		tokenString, _ := token.SignedString([]byte("thisWillBeMovedToADedicatedStruct"))
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -106,5 +108,4 @@ func (u User) Login(w http.ResponseWriter, r *http.Request) {
 		message.NewAPIError(&message.APIError{Status: http.StatusUnauthorized}, w)
 		return
 	}
-
 }
