@@ -4539,6 +4539,10 @@ button,
 
 /* Your custom CSS here */
 
+.header {
+  height: 500px;
+}
+
 @media (min-width: 576px) {
   .sm\:list-reset {
     list-style: none;
