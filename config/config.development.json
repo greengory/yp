@@ -1,6 +1,6 @@
 {
   "server": {
-    "address": "8081"
+    "address": "8083"
   },
   "database": {
     "host": "localhost",

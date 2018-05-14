@@ -12,9 +12,12 @@ var (
 )
 
 const (
-	DATABASE             = "database.name"
+	DATABASE             = "yellowpages_test"
 	USERCOLLECTION       = "users"
 	RESTAURANTCOLLECTION = "restaurants"
+	CATEGORIESCOLLECTION = "categories"
+	BUSINESS             = "business"
+	BUSINESS_TYPE        = "business_types"
 )
 
 type Mongo struct {
