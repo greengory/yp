@@ -16,9 +16,10 @@ type User struct {
 	ID             bson.ObjectId `json:"id" bson:"_id"`
 	Name           string        `json:"name"`
 	Email          string        `json:"email"`
+	AvatarURL      string        `json:"avatar_url"`
 	Password       string        `json:"-" bson:"-"`
 	HashedPassword []byte        `json:"hash_password, omitempty"`
-	VerifiedToken  string        `json:"verified_token" bson:"verified_token"`
+	VerifiedToken  string        `json:"verified_token, omitempty" bson:"verified_token, omitempty"`
 	IsAdmin        bool          `json:"is_admin"`
 	IsActive       bool          `json:"is_active"`
 	CreatedAt      time.Time     `json:"created_at"`

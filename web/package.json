@@ -8,9 +8,15 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "tailwind:css":"tailwind build src/css/tailwind.src.css -o src/css/tailwind.css",
+    "start": "npm run tailwind:css && react-scripts start",
+    "build": "npm run tailwind:css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.5.0",
+    "postcss-cli": "^5.0.0",
+    "tailwindcss": "^0.5.3"
   }
 }
