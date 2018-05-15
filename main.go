@@ -12,6 +12,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/opiumated/yellowpages/category"
+	"github.com/opiumated/yellowpages/locations"
 	"github.com/opiumated/yellowpages/mongo"
 	"github.com/opiumated/yellowpages/users"
 	"github.com/spf13/viper"
@@ -61,6 +63,8 @@ func main() {
 		MaxAge:           300,
 	})
 	r.Use(cors.Handler)
+	r.Mount("/locations", locations.Routes())
+	r.Mount("/categories", category.Routes())
 	r.Mount("/users", users.Routes())
 
 	//Database Connection

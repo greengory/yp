@@ -1,5 +1,8 @@
 .header {
   height: 600px;
+  background: url(https://pixabay.com/get/ea36b90e20f3003ecd1f4200e54a4195e46ae3d01bb7124395f7c77d/open-air-museum-3381871.jpg);
+  background-size: cover;
+  background: black;
 }
 
 .search-box {
@@ -16,4 +19,15 @@
 
 .search-box.container {
   top: 200px;
+}
+
+
+.links > a {
+  color: #ffffff;
+  padding: 0 25px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
 }

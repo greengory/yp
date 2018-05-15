@@ -4,32 +4,26 @@ import (
 	"errors"
 	"time"
 
+	"github.com/opiumated/yellowpages/locations"
 	"github.com/opiumated/yellowpages/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 
-type Location struct {
-	Address string `json:"address"`
-	City    string `json:"city"`
-	State   string `json:"state"`
-	Zip     string `json:"zipcode"`
-	Country string `json:"country"`
-}
-
 type Business struct {
-	ID               bson.ObjectId `json:"id"`
-	Name             string        `json:"name"`
-	Location         Location      `json:"location"`
-	OwnersName       string        `json:"owner"`
-	OwnersPhone      string        `json:"owner_phone"`
-	BusinessEmail    string        `json:"email"`
-	Type             string        `json:"business_type"`
-	IsVerified       bool          `json:"is_verified"`
-	Website          string        `json:"website"`
-	BusinessCategory string        `json:"category"`
-	Description      string        `json:"description"`
-	CreatedAt        time.Time     `json:"created_at"`
-	UpdatedAt        time.Time     `json:"updated_at"`
+	ID               bson.ObjectId      `json:"id"`
+	Name             string             `json:"name"`
+	Address          string             `json:"address"`
+	Location         locations.Location `json:"location"`
+	OwnersName       string             `json:"owner"`
+	OwnersPhone      string             `json:"owner_phone"`
+	BusinessEmail    string             `json:"email"`
+	Type             string             `json:"business_type"`
+	IsVerified       bool               `json:"is_verified"`
+	Website          string             `json:"website"`
+	BusinessCategory string             `json:"category"`
+	Description      string             `json:"description"`
+	CreatedAt        time.Time          `json:"created_at"`
+	UpdatedAt        time.Time          `json:"updated_at"`
 }
 
 func New(business Business) error {

@@ -14,6 +14,7 @@ var (
 const (
 	DATABASE             = "yellowpages_test"
 	USERCOLLECTION       = "users"
+	LOCATIONSCOLLECTION  = "locations"
 	RESTAURANTCOLLECTION = "restaurants"
 	CATEGORIESCOLLECTION = "categories"
 	BUSINESS             = "business"
