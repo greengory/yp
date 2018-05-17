@@ -1,6 +1,14 @@
 import React from 'react'
+import { getHomepageCategories } from '../redux/actions'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-const SearchArea = () => {
+
+class SearchArea extends React.Component {
+  componentDidMount() {
+    this.props.taglineCategories()
+  }
+  render(){
     return (
         <div className="search-box absolute">
             <div className="container mx-auto py-8 px-8 text-white">
@@ -26,8 +34,31 @@ const SearchArea = () => {
                   <a href="/auto-insurance">Auto Insurance</a>
               </div>
             </div>
+
+            {/* <div className="links bg-white text-black">
+                {this.props.hpCategories.data.map((item) => (
+                    <li key={item.id}>
+                        {item.category}
+                    </li>
+                ))}
+            </div> */}
         </div>
     );
+  }
 };
 
-export default SearchArea;
+function mapStateToProps(state){
+  console.log("From MapStateToProps");
+  console.dir(state.items);
+  return {
+    hpCategories: state.items
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    taglineCategories: bindActionCreators(getHomepageCategories, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchArea);

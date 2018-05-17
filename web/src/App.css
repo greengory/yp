@@ -31,3 +31,36 @@
   text-decoration: none;
   text-transform: uppercase;
 }
+
+.advertise-with-us {
+  height: 300px;
+}
+
+.businesses-closeby {
+  border-top: 4px solid #eeeeee;
+}
+
+.businesses-closeby a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.featured_new-businesses {
+  font-size: 1.8em;
+}
+
+.box{
+  background: #ffffff;
+  height: 370px;
+  border: 1px solid #eee;
+}
+
+.box img {
+  min-width: 100%;
+  height: 210px;
+}
+a.see_more_businesses {
+  text-decoration: underline;
+  font-weight: 0;
+}
