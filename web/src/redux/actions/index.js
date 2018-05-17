@@ -14,7 +14,7 @@ export const getHomepageCategories = () => {
             .then(res => res.json())
             .then(data => {
                 console.dir(data.data);
-                dispatch(homepageFetchCategoriesSuccess(data)); //Dispatch an action
+                dispatch(homepageFetchCategoriesSuccess(data.data)); //Dispatch an action
         })
     }
 }

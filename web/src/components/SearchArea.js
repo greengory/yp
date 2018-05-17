@@ -9,9 +9,6 @@ class SearchArea extends React.Component {
     this.props.taglineCategories()
   }
   render(){
-    console.log("Hello World");
-    let hpCategoryListing = this.props.hpCategories;
-
     return (
         <div className="search-box absolute">
             <div className="container mx-auto py-8 px-8 text-white">
@@ -34,20 +31,29 @@ class SearchArea extends React.Component {
                   <a href="/plumbers">Plumbers</a>
                   <a href="/locksmiths">Locksmiths</a>
                   <a href="/dentists">Dentists</a>
-                  <a href="/auto-insurance">Auto Insurance</a> 
+                  <a href="/auto-insurance">Auto Insurance</a>
               </div>
             </div>
+
+            {/* <div className="links bg-white text-black">
+                {this.props.hpCategories.data.map((item) => (
+                    <li key={item.id}>
+                        {item.category}
+                    </li>
+                ))}
+            </div> */}
         </div>
     );
   }
 };
 
 function mapStateToProps(state){
+  console.log("From MapStateToProps");
+  console.dir(state.items);
   return {
     hpCategories: state.items
   }
 }
-
 
 function mapDispatchToProps(dispatch){
   return {
@@ -55,4 +61,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(null, mapDispatchToProps)(SearchArea);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchArea);
