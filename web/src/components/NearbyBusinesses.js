@@ -65,7 +65,7 @@ export const NearbyBusinesses = () => {
                         </div>
                     </div>
                 </div>
-                <a className="see_more_businesses text-center underline" href="/business/more_new">See more featured business</a>
+                <div className="text-center"><a className="see_more_businesses underline" href="/business/more_new">see more featured business</a></div>
             </div>
         </div>
     )

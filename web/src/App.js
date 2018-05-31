@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/Navigation';
 import SearchArea from './components/SearchArea';
 import { NearbyBusinesses } from './components/NearbyBusinesses';
+import { BrowseByCategories } from './components/BrowseByCategories';
 
 class App extends Component {
   render() {

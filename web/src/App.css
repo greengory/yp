@@ -64,3 +64,8 @@ a.see_more_businesses {
   text-decoration: underline;
   font-weight: 0;
 }
+
+
+.category_box {
+  height: 137px;
+}
