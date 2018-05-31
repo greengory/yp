@@ -11,7 +11,6 @@ const store = createStore(
         createLogger(),
         thunkMiddleware
     ),
-    
 );
 
 export default store;

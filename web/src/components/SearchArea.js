@@ -1,18 +1,22 @@
 import React from 'react'
-import { getHomepageCategories } from '../redux/actions'
+import { getHomepageCategories, fetchHpCategories } from '../redux/actions'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
 class SearchArea extends React.Component {
+  constructor() {
+    super();
+  }
+
   componentDidMount() {
-    this.props.taglineCategories()
+    this.props.fetchData('http://localhost:8083/categories')
   }
   render(){
     return (
         <div className="search-box absolute">
             <div className="container mx-auto py-8 px-8 text-white">
-              <div className="tagline_for_search">Taglines goes here</div>
+              <div className="tagline_for_search">Yellow Pages</div>
               <div className="search_form flex">
                 <div className="w-1/2 relative">
                   <input type="text" className="w-1/2 h-8 px-4 py-2 text-xs" placeholder="Search Business..."/>
@@ -34,30 +38,23 @@ class SearchArea extends React.Component {
                   <a href="/auto-insurance">Auto Insurance</a>
               </div>
             </div>
-
-            {/* <div className="links bg-white text-black">
-                {this.props.hpCategories.data.map((item) => (
-                    <li key={item.id}>
-                        {item.category}
-                    </li>
-                ))}
-            </div> */}
         </div>
     );
   }
 };
 
 function mapStateToProps(state){
-  console.log("From MapStateToProps");
-  console.dir(state.items);
+  console.log(state);
   return {
-    hpCategories: state.items
+    items: state,
+    hasErrored: state.itemsHasErrored,
+    isLoading: state.itemsIsLoading
   }
 }
 
 function mapDispatchToProps(dispatch){
   return {
-    taglineCategories: bindActionCreators(getHomepageCategories, dispatch)
+    fetchData: (url) => dispatch(fetchHpCategories(url))
   }
 }
 
